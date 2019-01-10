@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soft.social.queryData.dao.QueryDataDao">
+    <sql id="TABLE_COLUMN">
+        T.city,
+        T.social_payment_min socialPaymentMin,
+        T.socia_payment_max socialPaymentMax,
+        T.personal_pension_proportion personalPensionProportion,
+        T.personal_medical_proportion personalMedicalProportion,
+        T.personal_lostJob_proportion personalLostJobProportion,
+        T.company_pension_proportion companyPensionProportion,
+        T.company_medical_proportion companyMedicalProportion,
+        T.company_lostJob_proportion companyLostJobProportion,
+        T.company_injury_proportion companyInjuryProportion,
+        T.company_birth_proportion companyBirthProportion,
+        T.accumulation_fund_payment_min accumulationFundPaymentMin,
+        T.accumulation_fund_payment_max accumulationFundPaymentMax,
+        T.accumulation_fund_proportion accumulationFundProportion
+
+    </sql>
+    
+    <select id="selectSocialSecurityData"  parameterType="java.lang.String"  resultType="com.soft.social.queryData.model.SocialSecurityBaseEntity">
+        SELECT
+        <include refid="TABLE_COLUMN"/>
+        FROM tax_Proportion T
+        WHERE T.city = #{city}
+      </select>
+
+</mapper>
