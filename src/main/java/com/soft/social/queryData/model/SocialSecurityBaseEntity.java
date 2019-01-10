@@ -3,7 +3,7 @@ package com.soft.social.queryData.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class SocialSecurityBaseEntity implements Serializable {
+public class SocialSecurityBaseEntity  implements Serializable {
 
     /**
      * 城市
@@ -153,4 +153,5 @@ public class SocialSecurityBaseEntity implements Serializable {
     public void setAccumulationFundProportion(BigDecimal accumulationFundProportion) {
         this.accumulationFundProportion = accumulationFundProportion;
     }
+
 }

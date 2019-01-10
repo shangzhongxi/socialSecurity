@@ -1,15 +1,15 @@
 package com.soft.social.common;
 
-import java.util.List;
+import com.soft.social.queryData.model.SocialSecurityBaseEntity;
 
 public class BaseResponse extends BaseStatus{
-    private List<?> Data;
+    private SocialSecurityBaseEntity Data;
 
-    public List<?> getData() {
+    public SocialSecurityBaseEntity getData() {
         return Data;
     }
 
-    public void setData(List<?> data) {
+    public void setData(SocialSecurityBaseEntity data) {
         Data = data;
     }
 }

@@ -8,7 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -28,12 +30,12 @@ public class QueryDataController {
         BaseResponse data = new BaseResponse();
         try {
             List<SocialSecurityBaseEntity> list =  service.selectSocialSecurity(city);
-            data.setData(list);
+            data.setData(list.get(0));
             data.setMessage(city + " 数据查询成功");
-            data.setSuccess("√");
+            data.setSuccess("1");
         }catch (Exception e){
             data.setMessage(city + " 数据查询失败");
-            data.setSuccess("×");
+            data.setSuccess("-1");
         }
 
         return data;
