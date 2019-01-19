@@ -24,16 +24,19 @@ public class QueryDataController {
 
     @Autowired
     private QueryDataService service;
+
     @ResponseBody
     @GetMapping(value = "/cityBaseData")
     public BaseResponse queryData(String city){
-        BaseResponse data = new BaseResponse();
+        BaseResponse<SocialSecurityBaseEntity> data = new BaseResponse<SocialSecurityBaseEntity>();
         try {
+
             List<SocialSecurityBaseEntity> list =  service.selectSocialSecurity(city);
             data.setData(list.get(0));
             data.setMessage(city + " 数据查询成功");
             data.setSuccess("1");
         }catch (Exception e){
+            data.setData(null);
             data.setMessage(city + " 数据查询失败");
             data.setSuccess("-1");
         }

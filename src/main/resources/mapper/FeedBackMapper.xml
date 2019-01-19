@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soft.social.feedback.dao.FeedBackDao">
+
+    
+    <insert id="insertFeedback" parameterType="com.soft.social.feedback.model.FeedBackEntity">
+        insert  into feedback (feedbackDetail,user_id)
+        values (#{feedBack,jdbcType=VARCHAR },#{userId,jdbcType=VARCHAR })
+    </insert>
+
+</mapper>
