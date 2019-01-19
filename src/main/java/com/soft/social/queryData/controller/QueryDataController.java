@@ -4,6 +4,7 @@ package com.soft.social.queryData.controller;
 import com.soft.social.common.BaseResponse;
 import com.soft.social.queryData.model.SocialSecurityBaseEntity;
 import com.soft.social.queryData.service.QueryDataService;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
@@ -27,18 +31,23 @@ public class QueryDataController {
 
     @ResponseBody
     @GetMapping(value = "/cityBaseData")
+    @ApiOperation(value = "查询城市基础社保信息",notes = "查询城市基础社保信息")
     public BaseResponse queryData(String city){
         BaseResponse<SocialSecurityBaseEntity> data = new BaseResponse<SocialSecurityBaseEntity>();
+        HttpServletResponse httpServletResponse = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+        int status = httpServletResponse.getStatus();
         try {
 
             List<SocialSecurityBaseEntity> list =  service.selectSocialSecurity(city);
             data.setData(list.get(0));
             data.setMessage(city + " 数据查询成功");
             data.setSuccess("1");
+            data.setHttpStatus(status);
         }catch (Exception e){
             data.setData(null);
             data.setMessage(city + " 数据查询失败");
             data.setSuccess("-1");
+            data.setHttpStatus(status);
         }
 
         return data;

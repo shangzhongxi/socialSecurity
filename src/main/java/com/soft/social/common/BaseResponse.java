@@ -11,6 +11,8 @@ public class BaseResponse<T> {
 
     private String message;
 
+    private Integer httpStatus;
+
     public T getData() {
         return data;
     }
@@ -35,4 +37,11 @@ public class BaseResponse<T> {
         this.message = message;
     }
 
+    public Integer getHttpStatus() {
+        return httpStatus;
+    }
+
+    public void setHttpStatus(Integer httpStatus) {
+        this.httpStatus = httpStatus;
+    }
 }
