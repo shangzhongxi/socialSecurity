@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soft.social.articleInfo.dao.ArticleInfoDao">
+
+    <select id="selectArticleInfo" resultType="com.soft.social.articleInfo.model.ArticleInfoEntity">
+        SELECT AI.id,
+			 AI.article_source articleSource,
+			 AI.article_time articleTime,
+			 AI.article_title articleTitle,
+			 AI.article_url articleUrl,
+			 AI.img_url imgUrl
+        FROM article_info AI
+
+    </select>
+
+</mapper>
