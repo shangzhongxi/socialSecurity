@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soft.social.shareUrl.dao.ShareUrlForAppDao">
+    <sql id="TABLE_COLUMN">
+        T.id,
+        T.share_url shareUrl
+    </sql>
+    
+    <select id="selectSocialAppUrlData"  parameterType="java.lang.String"  resultType="com.soft.social.shareUrl.model.ShareUrlForAppEntity">
+        SELECT
+        <include refid="TABLE_COLUMN"/>
+        FROM app_config T
+      </select>
+
+</mapper>
