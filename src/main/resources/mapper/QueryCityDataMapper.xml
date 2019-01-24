@@ -23,7 +23,7 @@
         SELECT
         <include refid="TABLE_COLUMN"/>
         FROM tax_Proportion T
-        WHERE T.city = #{city}
-      </select>
+        WHERE T.city LIKE CONCAT('%',#{city},'%');
+    </select>
 
 </mapper>
