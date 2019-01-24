@@ -2,6 +2,7 @@ package com.soft.social.shareUrl.controller;
 
 
 import com.soft.social.common.BaseResponse;
+import com.soft.social.common.HttpStatus;
 import com.soft.social.shareUrl.model.ShareUrlForAppEntity;
 import com.soft.social.shareUrl.service.ShareUrlForAppService;
 import io.swagger.annotations.ApiOperation;
@@ -34,20 +35,18 @@ public class ShareUrlForAppController {
     @ApiOperation(value = "查询共享APP URL",notes = "查询共享APP URL")
     public BaseResponse queryUrl(){
         BaseResponse<ShareUrlForAppEntity> data = new BaseResponse<ShareUrlForAppEntity>();
-        HttpServletResponse httpServletResponse = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
-        int status = httpServletResponse.getStatus();
         try {
 
             List<ShareUrlForAppEntity> list =  service.selectSocialAppUrl();
             data.setData(list.get(0));
             data.setMessage(" 数据查询成功");
             data.setSuccess("1");
-            data.setHttpStatus(status);
+            data.setHttpStatus(HttpStatus.gethttpStatus());
         }catch (Exception e){
             data.setData(null);
             data.setMessage(" 数据查询失败");
             data.setSuccess("-1");
-            data.setHttpStatus(status);
+            data.setHttpStatus(HttpStatus.gethttpStatus());
         }
 
         return data;

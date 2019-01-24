@@ -2,6 +2,7 @@ package com.soft.social.queryData.controller;
 
 
 import com.soft.social.common.BaseResponse;
+import com.soft.social.common.HttpStatus;
 import com.soft.social.queryData.model.SocialSecurityBaseEntity;
 import com.soft.social.queryData.service.QueryDataService;
 import io.swagger.annotations.ApiOperation;
@@ -34,20 +35,18 @@ public class QueryDataController {
     @ApiOperation(value = "查询城市基础社保信息",notes = "查询城市基础社保信息")
     public BaseResponse queryData(String city){
         BaseResponse<SocialSecurityBaseEntity> data = new BaseResponse<SocialSecurityBaseEntity>();
-        HttpServletResponse httpServletResponse = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
-        int status = httpServletResponse.getStatus();
         try {
 
             List<SocialSecurityBaseEntity> list =  service.selectSocialSecurity(city);
             data.setData(list.get(0));
             data.setMessage(city + " 数据查询成功");
             data.setSuccess("1");
-            data.setHttpStatus(status);
+            data.setHttpStatus(HttpStatus.gethttpStatus());
         }catch (Exception e){
             data.setData(null);
             data.setMessage(city + " 数据查询失败");
             data.setSuccess("-1");
-            data.setHttpStatus(status);
+            data.setHttpStatus(HttpStatus.gethttpStatus());
         }
 
         return data;
