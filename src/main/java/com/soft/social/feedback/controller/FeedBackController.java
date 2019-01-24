@@ -1,6 +1,7 @@
 package com.soft.social.feedback.controller;
 
 import com.soft.social.common.BaseResponse;
+import com.soft.social.common.HttpStatus;
 import com.soft.social.feedback.model.FeedBackEntity;
 import com.soft.social.feedback.service.FeedBackService;
 import io.swagger.annotations.ApiOperation;
@@ -31,9 +32,6 @@ public class FeedBackController {
     public BaseResponse insertFeedBackMsg(@RequestParam(value = "feedBackDetail" ) String feedBackDetail,
                                           @RequestParam(value = "userid" ,required = false,defaultValue = "youke") String userid){
         BaseResponse<String> data = new BaseResponse<String>();
-        HttpServletResponse httpServletResponse = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
-        int status = httpServletResponse.getStatus();
-
         try {
             FeedBackEntity feedBackMsg = new FeedBackEntity();
             feedBackMsg.setFeedBack(feedBackDetail);
@@ -43,12 +41,12 @@ public class FeedBackController {
                 data.setData("TRUE");
                 data.setMessage("反馈信息插入成功");
                 data.setSuccess("1");
-                data.setHttpStatus(status);
+                data.setHttpStatus(HttpStatus.gethttpStatus());
             } else {
                 data.setData("FALSE");
                 data.setMessage("反馈信息插入失败");
                 data.setSuccess("-2");
-                data.setHttpStatus(status);
+                data.setHttpStatus(HttpStatus.gethttpStatus());
 
             }
         }catch (Exception e){
@@ -56,7 +54,7 @@ public class FeedBackController {
             data.setData("FALSE");
             data.setMessage("系统异常，反馈信息插入失败");
             data.setSuccess("-1");
-            data.setHttpStatus(status);
+            data.setHttpStatus(HttpStatus.gethttpStatus());
 
         }
         return data;
