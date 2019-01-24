@@ -1,6 +1,7 @@
 package com.soft.social.feedback.controller;
 
 import com.soft.social.common.BaseResponse;
+import com.soft.social.common.BaseResponseSingle;
 import com.soft.social.common.HttpStatus;
 import com.soft.social.feedback.model.FeedBackEntity;
 import com.soft.social.feedback.service.FeedBackService;
@@ -31,7 +32,7 @@ public class FeedBackController {
     @ApiOperation(value = "插入反馈信息",notes = "插入反馈信息")
     public BaseResponse insertFeedBackMsg(@RequestParam(value = "feedBackDetail" ) String feedBackDetail,
                                           @RequestParam(value = "userid" ,required = false,defaultValue = "youke") String userid){
-        BaseResponse<String> data = new BaseResponse<String>();
+        BaseResponseSingle<String> data = new BaseResponseSingle<String>();
         try {
             FeedBackEntity feedBackMsg = new FeedBackEntity();
             feedBackMsg.setFeedBack(feedBackDetail);

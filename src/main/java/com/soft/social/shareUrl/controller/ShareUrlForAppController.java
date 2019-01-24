@@ -2,6 +2,7 @@ package com.soft.social.shareUrl.controller;
 
 
 import com.soft.social.common.BaseResponse;
+import com.soft.social.common.BaseResponseSingle;
 import com.soft.social.common.HttpStatus;
 import com.soft.social.shareUrl.model.ShareUrlForAppEntity;
 import com.soft.social.shareUrl.service.ShareUrlForAppService;
@@ -34,7 +35,7 @@ public class ShareUrlForAppController {
     @GetMapping(value = "/shareUrlData")
     @ApiOperation(value = "查询共享APP URL",notes = "查询共享APP URL")
     public BaseResponse queryUrl(){
-        BaseResponse<ShareUrlForAppEntity> data = new BaseResponse<ShareUrlForAppEntity>();
+        BaseResponseSingle<ShareUrlForAppEntity> data = new BaseResponseSingle<ShareUrlForAppEntity>();
         try {
 
             List<ShareUrlForAppEntity> list =  service.selectSocialAppUrl();

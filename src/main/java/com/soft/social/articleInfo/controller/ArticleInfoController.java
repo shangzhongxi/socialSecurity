@@ -3,6 +3,7 @@ package com.soft.social.articleInfo.controller;
 import com.soft.social.articleInfo.model.ArticleInfoEntity;
 import com.soft.social.articleInfo.service.ArticleInfoService;
 import com.soft.social.common.BaseResponse;
+import com.soft.social.common.BaseResponseList;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,10 +36,10 @@ public class ArticleInfoController {
                                   @RequestParam(value = "pageSize") int pageSize ){
         HttpServletResponse httpServletResponse = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
         int status = httpServletResponse.getStatus();
-        BaseResponse<ArticleInfoEntity> data = new BaseResponse<ArticleInfoEntity>();
+        BaseResponseList<ArticleInfoEntity> data = new BaseResponseList<ArticleInfoEntity>();
         try{
             List<ArticleInfoEntity> list = service.selectArticleInfo(pageNum,pageSize);
-            data.setData(list.get(0));
+            data.setData(list);
             data.setMessage("新闻列表信息查询成功");
             data.setSuccess("1");
             data.setHttpStatus(status);

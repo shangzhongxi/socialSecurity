@@ -2,6 +2,7 @@ package com.soft.social.queryData.controller;
 
 
 import com.soft.social.common.BaseResponse;
+import com.soft.social.common.BaseResponseSingle;
 import com.soft.social.common.HttpStatus;
 import com.soft.social.queryData.model.SocialSecurityBaseEntity;
 import com.soft.social.queryData.service.QueryDataService;
@@ -34,7 +35,7 @@ public class QueryDataController {
     @GetMapping(value = "/cityBaseData")
     @ApiOperation(value = "查询城市基础社保信息",notes = "查询城市基础社保信息")
     public BaseResponse queryData(String city){
-        BaseResponse<SocialSecurityBaseEntity> data = new BaseResponse<SocialSecurityBaseEntity>();
+        BaseResponseSingle<SocialSecurityBaseEntity> data = new BaseResponseSingle<SocialSecurityBaseEntity>();
         try {
 
             List<SocialSecurityBaseEntity> list =  service.selectSocialSecurity(city);
