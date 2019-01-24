@@ -22,7 +22,7 @@ import java.util.List;
 
 
 @Controller
-    @RequestMapping(value = "/shareUrl")
+    @RequestMapping(value = "/baseH5Urls")
 public class ShareUrlForAppController {
 
     private Logger logger = LoggerFactory.getLogger(ShareUrlForAppController.class);
@@ -32,7 +32,7 @@ public class ShareUrlForAppController {
     private ShareUrlForAppService service;
 
     @ResponseBody
-    @GetMapping(value = "/shareUrlData")
+    @GetMapping(value = "/baseH5UrlsData")
     @ApiOperation(value = "查询共享APP URL",notes = "查询共享APP URL")
     public BaseResponse queryUrl(){
         BaseResponseSingle<ShareUrlForAppEntity> data = new BaseResponseSingle<ShareUrlForAppEntity>();
