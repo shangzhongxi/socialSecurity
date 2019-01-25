@@ -44,6 +44,7 @@ public class ShareUrlForAppController {
             data.setSuccess("1");
             data.setHttpStatus(HttpStatus.gethttpStatus());
         }catch (Exception e){
+            e.printStackTrace();
             data.setData(null);
             data.setMessage(" 数据查询失败");
             data.setSuccess("-1");
