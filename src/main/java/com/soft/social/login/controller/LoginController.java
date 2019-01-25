@@ -29,8 +29,8 @@ public class LoginController {
     @ResponseBody
     @PostMapping(value = "/smsSend", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "发送验证码",notes = "发送验证码")
-    public BaseResponseSingle verifyCodeResult(@RequestBody JSONObject num) {
-        String phoneNum = num.get("phoneNum").toString();
+    public BaseResponseSingle verifyCodeResult(@RequestBody JSONObject phoneNum) {
+        String number = phoneNum.get("phoneNum").toString();
         // 短信应用SDK AppID
         int appid = 1400181821; // 1400开头
 
@@ -51,17 +51,18 @@ public class LoginController {
         try {
             String[] params = {varifyCode};//数组具体的元素个数和模板中变量个数必须一致，例如事例中templateId:5678对应一个变量，参数数组中元素个数也必须是一个
             SmsSingleSender ssender = new SmsSingleSender(appid, appkey);
-            SmsSingleSenderResult result = ssender.sendWithParam("86", phoneNum,
+            SmsSingleSenderResult result = ssender.sendWithParam("86", number,
                     templateId, params, smsSign, "", "");  // 签名参数未提供或者为空时，会使用默认签名发送短信
             System.out.println(result);
-            logger.debug("验证码获取成功 |#");
+
+            logger.debug("验证码获取成功 |#" + "验证码是：" + varifyCode + "|#");
 
 
-            service.insertVerifyCode(phoneNum,varifyCode);
+            service.insertVerifyCode(number,varifyCode);
             logger.debug("验证码插入成功 |#");
 
 
-            json.put("telephoneNum", phoneNum);
+            json.put("phoneNumber", number);
             json.put("verifyCode",varifyCode);
             data.setData(json);
             data.setMessage("短信验证码发送成功");
