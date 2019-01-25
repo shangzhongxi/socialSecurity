@@ -10,6 +10,6 @@ public class JumpNoticeController {
     @RequestMapping("/notice")
     public String hello() {
 
-        return "/html/notice";
+        return "html/notice";
     }
 }
