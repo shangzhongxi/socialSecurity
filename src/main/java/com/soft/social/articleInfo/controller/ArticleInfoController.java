@@ -4,6 +4,7 @@ import com.soft.social.articleInfo.model.ArticleInfoEntity;
 import com.soft.social.articleInfo.service.ArticleInfoService;
 import com.soft.social.common.BaseResponse;
 import com.soft.social.common.BaseResponseList;
+import com.soft.social.common.HttpStatus;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,12 +43,12 @@ public class ArticleInfoController {
             data.setData(list);
             data.setMessage("新闻列表信息查询成功");
             data.setSuccess("1");
-            data.setHttpStatus(status);
+            data.setHttpStatus(HttpStatus.gethttpStatus());
         }catch (Exception e){
             data.setData(null);
             data.setMessage("新闻列表信息查询失败");
             data.setSuccess("-1");
-            data.setHttpStatus(status);
+            data.setHttpStatus(HttpStatus.gethttpStatus());
         }
 
         return data;

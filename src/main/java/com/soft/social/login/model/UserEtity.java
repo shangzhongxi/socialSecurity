@@ -13,17 +13,12 @@ public class UserEtity implements Serializable {
     /**
      * 用户手机号
      */
-    private Integer telephoneNum;
+    private String telephoneNum;
 
     /**
      * 用户创建时间
      */
-    private Date createTime;
-
-    /**
-     * 用户修改时间
-     */
-    private Date updateTime;
+    private String createTime;
 
     /**
      * 验证码
@@ -53,29 +48,22 @@ public class UserEtity implements Serializable {
         this.uuid = uuid;
     }
 
-    public Integer getTelephoneNum() {
+    public String getTelephoneNum() {
         return telephoneNum;
     }
 
-    public void setTelephoneNum(Integer telephoneNum) {
+    public void setTelephoneNum(String telephoneNum) {
         this.telephoneNum = telephoneNum;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 
     public String getVerifyCode() {
         return verifyCode;
