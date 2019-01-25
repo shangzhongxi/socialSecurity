@@ -10,10 +10,10 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 @Controller
@@ -27,10 +27,10 @@ public class LoginController {
     private LoginService service;
 
     @ResponseBody
-    @PostMapping(value = "/smsSend", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/smsSend", consumes = "application/json")
     @ApiOperation(value = "发送验证码",notes = "发送验证码")
-    public BaseResponseSingle verifyCodeResult(@RequestBody JSONObject phoneNum) {
-        String number = phoneNum.get("phoneNum").toString();
+    public BaseResponseSingle verifyCodeResult(@RequestBody String phoneNum) {
+        //String number = phoneNum.get("phoneNum").toString();
         // 短信应用SDK AppID
         int appid = 1400181821; // 1400开头
 
@@ -46,25 +46,28 @@ public class LoginController {
         // 签名
         String smsSign = "情非所以"; // NOTE: 这里的签名"腾讯云"只是一个示例，真实的签名需要在短信控制台中申请，另外签名参数使用的是`签名内容`，而不是`签名ID`
         JSONObject json = new JSONObject();
-        BaseResponseSingle<JSONObject> data = new BaseResponseSingle<>();
+        HashMap<String ,String> map = new HashMap<String, String>();
+        BaseResponseSingle<HashMap<String ,String>> data = new BaseResponseSingle<>();
         String varifyCode = String.valueOf((int) ((Math.random() * 9 + 1) * 1000)); //验证码
         try {
             String[] params = {varifyCode};//数组具体的元素个数和模板中变量个数必须一致，例如事例中templateId:5678对应一个变量，参数数组中元素个数也必须是一个
             SmsSingleSender ssender = new SmsSingleSender(appid, appkey);
-            SmsSingleSenderResult result = ssender.sendWithParam("86", number,
+            SmsSingleSenderResult result = ssender.sendWithParam("86", phoneNum,
                     templateId, params, smsSign, "", "");  // 签名参数未提供或者为空时，会使用默认签名发送短信
-            System.out.println(result);
+            //System.out.println(result);
 
             logger.debug("验证码获取成功 |#" + "验证码是：" + varifyCode + "|#");
 
 
-            service.insertVerifyCode(number,varifyCode);
+            service.insertVerifyCode(phoneNum,varifyCode);
             logger.debug("验证码插入成功 |#");
 
 
-            json.put("phoneNumber", number);
+            json.put("phoneNumber", phoneNum);
             json.put("verifyCode",varifyCode);
-            data.setData(json);
+            map.put("phoneNumber", phoneNum);
+            map.put("verifyCode",varifyCode);
+            data.setData(map);
             data.setMessage("短信验证码发送成功");
             data.setSuccess("1");
             data.setHttpStatus(HttpStatus.gethttpStatus());
