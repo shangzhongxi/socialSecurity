@@ -44,8 +44,7 @@ public class LoginController {
         //templateId7839对应的内容是"您的验证码是: {1}"
         // 签名
         String smsSign = "情非所以"; // NOTE: 这里的签名"腾讯云"只是一个示例，真实的签名需要在短信控制台中申请，另外签名参数使用的是`签名内容`，而不是`签名ID`
-        HashMap<String ,String> map = new HashMap<String, String>();
-        BaseResponseSingle<HashMap<String ,String>> data = new BaseResponseSingle<>();
+        BaseResponseSingle<String> data = new BaseResponseSingle<>();
         String varifyCode = String.valueOf((int) ((Math.random() * 9 + 1) * 1000)); //验证码
         try {
             String[] params = {varifyCode};//数组具体的元素个数和模板中变量个数必须一致，例如事例中templateId:5678对应一个变量，参数数组中元素个数也必须是一个
@@ -59,9 +58,7 @@ public class LoginController {
             service.insertVerifyCode(number,varifyCode);
             logger.debug("验证码插入成功 |#");
 
-            map.put("phoneNumber", number);
-            map.put("verifyCode",varifyCode);
-            data.setData(map);
+            data.setData("TRUE");
             data.setMessage("短信验证码发送成功");
             data.setSuccess("1");
             data.setHttpStatus(HttpStatus.gethttpStatus());
@@ -69,7 +66,7 @@ public class LoginController {
         } catch (Exception e) {
             // HTTP响应码错误
             e.printStackTrace();
-            data.setData(null);
+            data.setData("FALSE");
             data.setMessage("短信验证码发送失败");
             data.setSuccess("-1");
             data.setHttpStatus(HttpStatus.gethttpStatus());
