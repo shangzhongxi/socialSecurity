@@ -14,6 +14,11 @@ public class ShareUrlForAppEntity implements Serializable {
      */
     private String privacyPolicy;
 
+    /**
+     * google广告是否展示
+     */
+    private String showGoogleAd;
+
 
     public String getShareUrl() {
         return shareUrl;
@@ -22,12 +27,16 @@ public class ShareUrlForAppEntity implements Serializable {
         this.shareUrl = shareUrl;
     }
 
-
     public String getPrivacyPolicy() {
         return privacyPolicy;
     }
     public void setPrivacyPolicy(String privacyPolicy) {
         this.privacyPolicy = privacyPolicy;
     }
+
+    public String getShowGoogleAd() {
+        return showGoogleAd;
+    }
+    public void seshowGoogleAd(String showGoogleAd) { this.showGoogleAd = showGoogleAd; }
 
 }

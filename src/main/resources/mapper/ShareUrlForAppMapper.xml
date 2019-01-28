@@ -4,7 +4,8 @@
     <sql id="TABLE_COLUMN">
         T.id,
         T.share_url shareUrl,
-        T.privacy_policy privacyPolicy
+        T.privacy_policy privacyPolicy,
+        T.show_google_ad showGoogleAd
     </sql>
     
     <select id="selectSocialAppUrlData"  parameterType="java.lang.String"  resultType="com.soft.social.shareUrl.model.ShareUrlForAppEntity">
