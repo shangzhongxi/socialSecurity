@@ -1,7 +1,10 @@
-server:
+http:
   port: 8888
-
-
+server:
+  port: 443
+  ssl:
+    key-store: 1786251_www.hsdian.top.pfx
+    key-store-password: Vwd7LoLD
 spring:
     datasource:
         name: mysql_test
