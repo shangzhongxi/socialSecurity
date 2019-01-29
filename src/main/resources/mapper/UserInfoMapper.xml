@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soft.social.user.dao.UserDao">
+
+    <sql id="TABLE_COLUMN">
+        T.uuid,
+        T.telephone_num telephoneNum,
+        T.user_name userName
+    </sql>
+    <select id="selectUserInfo"  parameterType="java.lang.String"  resultType="com.soft.social.user.model.UserEtity">
+        SELECT
+        <include refid="TABLE_COLUMN"/>
+
+        FROM user T
+        where T.uuid = #{uuid}
+      </select>
+
+</mapper>

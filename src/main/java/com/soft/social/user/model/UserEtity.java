@@ -1,7 +1,6 @@
-package com.soft.social.login.model;
+package com.soft.social.user.model;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 public class UserEtity implements Serializable {
 

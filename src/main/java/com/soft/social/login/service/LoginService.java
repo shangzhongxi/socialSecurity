@@ -1,17 +1,18 @@
 package com.soft.social.login.service;
 
-import com.soft.social.login.model.UserEtity;
+import com.soft.social.user.model.UserEtity;
+
+import java.util.List;
 
 public interface LoginService {
-
-    String selectUser(String telephoneNum);
-
-    Integer updateVerify(String uuid);
-
-
-    Integer insertUserInfo(UserEtity user);
-
-    Integer insertVerifyCode(String phoneNum,String verifyCode);
+    //查询用户
+    List<UserEtity> selectUser(String telephoneNum) throws Exception;
+    //查询验证码是否存在
+    String selectVerifyCodeExists(String phoneNum, String verifyCode) throws Exception;
+    //插入用户信息
+    Integer insertUserInfo(UserEtity user) throws Exception;
+    //插入验证码
+    Integer insertVerifyCode(String phoneNum,String verifyCode) throws Exception;
 
 
 }

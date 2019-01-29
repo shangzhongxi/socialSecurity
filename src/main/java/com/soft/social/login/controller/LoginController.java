@@ -3,7 +3,7 @@ package com.soft.social.login.controller;
 import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
 import com.soft.social.common.*;
-import com.soft.social.login.model.UserEtity;
+import com.soft.social.user.model.UserEtity;
 import com.soft.social.login.service.LoginService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.UUID;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping(value = "/login")
@@ -74,23 +74,104 @@ public class LoginController {
         return data;
     }
 
-    public void login(){
 
-        String uuid = service.selectUser("1");
-        //如果用户不存在，则创建用户
-        if (uuid == null) {
-            UserEtity user = new UserEtity();
+    @ResponseBody
+    @PostMapping(value = "/login")
+    @ApiOperation(value = "登陆",notes = "登陆")
+    public BaseResponseSingle login(@ModelAttribute UserEtity user) throws Exception{
+        BaseResponseSingle<HashMap<String,String>> data = new BaseResponseSingle<>();
+        HashMap<String,String> map = new HashMap<String ,String>();
 
-            user.setUuid(UUID.randomUUID().toString().replaceAll("-", ""));
-            user.setTelephoneNum("1");
-            //user.setVerifyCode(result.toString());
-            user.setVerifyCode("1");
-            service.insertUserInfo(user);
-        } else {
-            //如果存在，则更新验证码
-            //service.updateVerify(result.toString());
-            service.updateVerify("1");
+        String phoneNum = user.getTelephoneNum();
+        String verifyCode = user.getVerifyCode();
+        //验证白名单
 
+        if("16601110171".equals(phoneNum) && "0000".equals(verifyCode)){
+
+            map.put("userId", "417e3ef1cb264e9986992d4388bbd57e");
+            map.put("userName", "admin");
+            map.put("phoneNum", phoneNum);
+
+
+            data.setData(map);
+            data.setMessage("用户注册/登录成功");
+            data.setSuccess("1");
+            data.setHttpStatus(HttpStatus.gethttpStatus());
+
+        }else {
+
+            //先去验证码表查看该手机号是否发送过验证码，未查询到则返回验证码失效
+            String codeTime = service.selectVerifyCodeExists(phoneNum, verifyCode);
+            try {
+                if (codeTime != null) {
+
+                    Date nowDate = new Date();
+//            Date cTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(codeTime);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date cTime = sdf.parse(codeTime);
+                    //如果验证码入库时间和当前时间大于5分钟，则验证码失效
+                    if (nowDate.getTime() - cTime.getTime() <= 300000) {
+                        //查询用户表是否有该手机号，如果有则登陆成功，返回用户信息。如果没有则创建用户。
+                        List<UserEtity> list = service.selectUser(phoneNum);
+                        //如果list是空，则创建新用户
+                        if (list.size() == 0) {
+                            user.setUuid(UUID.randomUUID().toString().replaceAll("-", ""));
+                            user.setTelephoneNum(phoneNum);
+                            user.setUserName(phoneNum); //注册时，用户名默认手机号
+                            service.insertUserInfo(user);
+                            logger.debug("用户注册成功 |#");
+
+
+                            map.put("userId", user.getUuid());
+                            map.put("userName", user.getUserName());
+                            map.put("phoneNum", user.getTelephoneNum());
+
+
+                            data.setData(map);
+                            data.setMessage("用户注册/登录成功");
+                            data.setSuccess("1");
+                            data.setHttpStatus(HttpStatus.gethttpStatus());
+                            logger.debug("用户注册/登录成功 |#");
+                        } else {
+                            map.put("userId", list.get(0).getUuid());
+                            map.put("userName", list.get(0).getUserName());
+                            map.put("phoneNum", list.get(0).getTelephoneNum());
+                            data.setData(map);
+                            data.setMessage("用户登录成功");
+                            data.setSuccess("1");
+                            data.setHttpStatus(HttpStatus.gethttpStatus());
+                            logger.debug("用户登录成功 |#");
+
+                        }
+
+                    } else {
+                        data.setData(null);
+                        data.setMessage("登陆失败，验证码超时，请重新发送验证码");
+                        data.setSuccess("-1");
+                        data.setHttpStatus(HttpStatus.gethttpStatus());
+                        logger.debug("验证超时 |#");
+                    }
+
+                } else {
+                    data.setData(null);
+                    data.setMessage("登陆失败，请重新发送验证码");
+                    data.setSuccess("-1");
+                    data.setHttpStatus(HttpStatus.gethttpStatus());
+                    logger.debug("未查询到验证码 |#");
+                }
+            } catch (Exception e) {
+                data.setData(null);
+                data.setMessage("登陆失败，后台异常");
+                data.setSuccess("-1");
+                data.setHttpStatus(HttpStatus.gethttpStatus());
+                logger.debug("后台异常 |#");
+            }
         }
+
+            return data;
+        }
+
     }
-}
+
+
+
