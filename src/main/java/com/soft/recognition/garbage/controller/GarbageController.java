@@ -5,6 +5,9 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
 
 @Controller
@@ -42,11 +45,28 @@ public class GarbageController {
         options.put("top_num", "3");
         options.put("baike_num", "5");
 
-//        // 参数为本地路径
+        // 参数为本地路径
 //        String image = "/Users/han-shy/Downloads/lu.jpeg";
 //        JSONObject res = client.animalDetect(image, options);
 //        System.out.println(res.toString(2));
 
+        // 参数为二进制数组
+        byte[] file = readFile("/Users/han-shy/Downloads/lu.jpeg");
+        JSONObject res2 = client.animalDetect(file, options);
+        System.out.println(res2.toString(2));
+    }
+
+
+    public static byte[]  readFile(String path){
+        byte[] fileByte = null;
+        try {
+            File file = new File(path);
+            fileByte = Files.readAllBytes(file.toPath());
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return fileByte;
 
     }
 }
