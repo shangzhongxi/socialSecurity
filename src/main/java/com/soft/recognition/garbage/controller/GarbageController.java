@@ -42,17 +42,17 @@ public class GarbageController {
     public void animal(AipImageClassify client){
         // 传入可选参数调用接口
         HashMap<String, String> options = new HashMap<String, String>();
-        options.put("top_num", "3");
+//        options.put("top_num", "3");
         options.put("baike_num", "5");
 
         // 参数为本地路径
 //        String image = "/Users/han-shy/Downloads/lu.jpeg";
-//        JSONObject res = client.animalDetect(image, options);
+//        JSONObject res = client.advancedGeneral(image, options);
 //        System.out.println(res.toString(2));
 
         // 参数为二进制数组
         byte[] file = readFile("/Users/han-shy/Downloads/lu.jpeg");
-        JSONObject res2 = client.animalDetect(file, options);
+        JSONObject res2 = client.advancedGeneral(file, options);
         System.out.println(res2.toString(2));
     }
 
