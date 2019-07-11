@@ -1,4 +1,4 @@
-package com.soft.social;
+package com.soft;
 
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
