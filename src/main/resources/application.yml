@@ -1,10 +1,10 @@
-http:
-  port: 8888
-server:
-  port: 443
-  ssl:
-    key-store: 1786251_www.hsdian.top.pfx
-    key-store-password: Vwd7LoLD
+#http:
+  #port: 8888
+#server:
+  #port: 443
+  #ssl:
+    #key-store: 1786251_www.hsdian.top.pfx
+    #key-store-password: Vwd7LoLD
 spring:
     datasource:
         name: mysql_test
@@ -58,5 +58,8 @@ logging:
   pattern:
       console: "%d{yyyy-MM-dd HH:mm:ss} %-5level - %msg%n"
       file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+server:
+  port: 8888
 
 
